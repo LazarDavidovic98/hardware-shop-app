@@ -1,0 +1,72 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "aplikacija\\src\\",
+            "color": "foldercolorizer.color_ff6699"
+        },
+        {
+            "folderPath": "aplikacija\\.gitignore\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\package-lock.json\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\package.json\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\tsconfig.build.json\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\tsconfig.json\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\nest-cli.json\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\eslint.config.mjs\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\.prettierrc\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\README.md\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\.vscode\\",
+            "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\node_modules\\",
+            "color": "foldercolorizer.color_66cc99"
+        }
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#dbd3f2",
+        "activityBar.background": "#dbd3f2",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#cc7253",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#dbd3f2",
+        "statusBar.background": "#bbace6",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#9b85da",
+        "statusBarItem.remoteBackground": "#bbace6",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#bbace6",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#bbace699",
+        "titleBar.inactiveForeground": "#15202b99"
+    },
+    "peacock.color": "#bbace6"
+}
