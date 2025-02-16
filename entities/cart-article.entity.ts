@@ -13,7 +13,7 @@ import { Cart } from "./cart.entity";
 @Index("uq_cart_article_cart_id_article_id", ["cartId", "articleId"], {
   unique: true,
 })
-@Entity("cart_article", { schema: "aplikacija" })
+@Entity("cart_article")
 export class CartArticle {
   @PrimaryGeneratedColumn({
     type: "int",
@@ -22,13 +22,13 @@ export class CartArticle {
   })
   cartArticleId: number;
 
-  @Column("int", { name: "cart_id", unsigned: true, default: () => "'0'" })
+  @Column({type: "int", name: "cart_id", unsigned: true, default: () => "'0'" })
   cartId: number;
 
-  @Column("int", { name: "article_id", unsigned: true, default: () => "'0'" })
+  @Column({type: "int", name: "article_id", unsigned: true, default: () => "'0'" })
   articleId: number;
 
-  @Column("int", { name: "quantity", unsigned: true, default: () => "'0'" })
+  @Column({type: "int", name: "quantity", unsigned: true, default: () => "'0'" })
   quantity: number;
 
   @ManyToOne(() => Article, (article) => article.cartArticles, {
