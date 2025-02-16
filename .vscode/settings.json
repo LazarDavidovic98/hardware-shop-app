@@ -59,6 +59,10 @@
         {
             "folderPath": "aplikacija\\dist\\",
             "color": "foldercolorizer.color_ffffff"
+        },
+        {
+            "folderPath": "aplikacija\\entities\\article.entity.ts\\",
+            "color": "foldercolorizer.color_ffffff"
         }
     ],
     "workbench.colorCustomizations": {

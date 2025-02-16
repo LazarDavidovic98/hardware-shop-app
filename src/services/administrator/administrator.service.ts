@@ -15,15 +15,8 @@ export class AdministratorService {
         return this.administrator.find();
     }
 
-    // @ts-ignore
-    // getById(id: number): Promise<Administrator> {
-    //     return this.administrator.findOne(id);
-
-    // }
-    
-    
-    
-    
-
-
+    // getById 
+    // add
+    // editById
+    // deleteById
 }
