@@ -47,6 +47,14 @@
         {
             "folderPath": "aplikacija\\node_modules\\",
             "color": "foldercolorizer.color_66cc99"
+        },
+        {
+            "folderPath": "aplikacija\\entities\\",
+            "color": "foldercolorizer.color_ffffff"
+        },
+        {
+            "folderPath": "aplikacija\\config\\",
+            "color": "foldercolorizer.color_ffffff"
         }
     ],
     "workbench.colorCustomizations": {
