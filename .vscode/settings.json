@@ -2,11 +2,11 @@
     "folder-color.pathColors": [
         {
             "folderPath": "aplikacija\\src\\",
-            "color": "foldercolorizer.color_ff6699"
+            "color": "foldercolorizer.color_66cc99"
         },
         {
             "folderPath": "aplikacija\\.gitignore\\",
-            "color": "foldercolorizer.color_666699"
+            "color": "foldercolorizer.color_cc6699"
         },
         {
             "folderPath": "aplikacija\\package-lock.json\\",
@@ -34,7 +34,7 @@
         },
         {
             "folderPath": "aplikacija\\.prettierrc\\",
-            "color": "foldercolorizer.color_666699"
+            "color": "foldercolorizer.color_cc6699"
         },
         {
             "folderPath": "aplikacija\\README.md\\",
@@ -42,11 +42,11 @@
         },
         {
             "folderPath": "aplikacija\\.vscode\\",
-            "color": "foldercolorizer.color_66cc99"
+            "color": "foldercolorizer.color_ffffff"
         },
         {
             "folderPath": "aplikacija\\node_modules\\",
-            "color": "foldercolorizer.color_66cc99"
+            "color": "foldercolorizer.color_ffffff"
         },
         {
             "folderPath": "aplikacija\\entities\\",
@@ -54,6 +54,10 @@
         },
         {
             "folderPath": "aplikacija\\config\\",
+            "color": "foldercolorizer.color_ffffff"
+        },
+        {
+            "folderPath": "aplikacija\\dist\\",
             "color": "foldercolorizer.color_ffffff"
         }
     ],
