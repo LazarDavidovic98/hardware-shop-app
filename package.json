@@ -20,10 +20,16 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@dataui/crud": "^5.3.4",
+    "@dataui/crud-typeorm": "^5.3.4",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
+    "@nestjsx/crud": "^5.0.0-alpha.3",
+    "@nestjsx/crud-request": "^5.0.0-alpha.3",
+    "@nestjsx/crud-typeorm": "^5.0.0-alpha.3",
+    "class-transformer": "^0.5.1",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",

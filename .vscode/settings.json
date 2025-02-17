@@ -58,11 +58,15 @@
         },
         {
             "folderPath": "aplikacija\\dist\\",
-            "color": "foldercolorizer.color_ffffff"
+            "color": "foldercolorizer.color_666699"
         },
         {
             "folderPath": "aplikacija\\entities\\article.entity.ts\\",
             "color": "foldercolorizer.color_ffffff"
+        },
+        {
+            "folderPath": "aplikacija\\ormconfig.json\\",
+            "color": "foldercolorizer.color_666699"
         }
     ],
     "workbench.colorCustomizations": {
