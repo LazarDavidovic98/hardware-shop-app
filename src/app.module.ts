@@ -18,8 +18,10 @@ import { User } from 'entities/user.entity';
 import { AdministratorController } from './controllers/api/administrator.controller';
 import { CategoryController } from './controllers/api/category.controllers';
 import { CategoryService } from './services/category/category.service';
-
 import { CrudConfigService } from '@nestjsx/crud';
+import { ArticleController } from './controllers/api/article.controller';
+import { ArticleService } from './services/article/article.service';
+import { Repository } from 'typeorm';
 
 CrudConfigService.load({
   query: {
@@ -52,13 +54,25 @@ CrudConfigService.load({
         User,
       ]     
     }),
-    TypeOrmModule.forFeature([Administrator, Category])
+    TypeOrmModule.forFeature([
+      Administrator,
+      Category,
+      Article,
+      ArticlePrice,
+      ArticleFeature,
+      Repository,
+    ])
   ],
   controllers: [
     AppController,
     AdministratorController,
-    CategoryController
+    CategoryController,
+    ArticleController,
   ],
-  providers: [AdministratorService, CategoryService],
+  providers: [
+    AdministratorService,
+    CategoryService,
+    ArticleService,
+  ],
 })
 export class AppModule {}

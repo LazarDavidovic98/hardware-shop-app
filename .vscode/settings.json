@@ -67,6 +67,22 @@
         {
             "folderPath": "aplikacija\\ormconfig.json\\",
             "color": "foldercolorizer.color_666699"
+        },
+        {
+            "folderPath": "aplikacija\\src\\services\\",
+            "color": "foldercolorizer.color_00cccc"
+        },
+        {
+            "folderPath": "aplikacija\\src\\controllers\\",
+            "color": "foldercolorizer.color_33cc00"
+        },
+        {
+            "folderPath": "aplikacija\\src\\dtos\\",
+            "color": "foldercolorizer.color_99ccff"
+        },
+        {
+            "folderPath": "aplikacija\\src\\misc\\",
+            "color": "foldercolorizer.color_cccc66"
         }
     ],
     "workbench.colorCustomizations": {

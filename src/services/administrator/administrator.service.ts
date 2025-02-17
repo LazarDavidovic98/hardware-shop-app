@@ -25,7 +25,7 @@ export class AdministratorService {
     // editById
     // deleteById
 
-    async getById(id: number): Promise<Administrator | null> {
+    async getById(id: number): Promise<Administrator | ApiResponse | null> {
         return await this.administrator.findOne({
             where: { administratorId: id }
         });
@@ -68,7 +68,7 @@ export class AdministratorService {
     
         if (admin === undefined) {
             return new Promise((resolve) => {
-                resolve(new ApiResponse("error", -1002));
+               resolve(new ApiResponse("error", -1002));
             });
         }
 
