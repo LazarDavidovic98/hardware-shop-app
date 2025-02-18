@@ -20,10 +20,19 @@ export class AdministratorService {
         return this.administrator.find();
     }
 
-    // getById 
-    // add
-    // editById
-    // deleteById
+    
+    async getByUsername(username: string): Promise<Administrator | null> {
+        const admin = await this.administrator.findOne({
+            where: { username: username }
+        });
+
+        if (admin) {
+            return admin;
+        }
+        
+        return null;
+    }
+
 
     async getById(id: number): Promise<Administrator | ApiResponse | null> {
         return await this.administrator.findOne({

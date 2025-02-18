@@ -22,6 +22,7 @@ import { CrudConfigService } from '@nestjsx/crud';
 import { ArticleController } from './controllers/api/article.controller';
 import { ArticleService } from './services/article/article.service';
 import { Repository } from 'typeorm';
+import { AuthController } from './controllers/api/auth.contoller';
 
 CrudConfigService.load({
   query: {
@@ -68,6 +69,7 @@ CrudConfigService.load({
     AdministratorController,
     CategoryController,
     ArticleController,
+    AuthController,
   ],
   providers: [
     AdministratorService,

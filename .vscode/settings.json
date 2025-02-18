@@ -1,10 +1,6 @@
 {
     "folder-color.pathColors": [
         {
-            "folderPath": "aplikacija\\src\\",
-            "color": "foldercolorizer.color_66cc99"
-        },
-        {
             "folderPath": "aplikacija\\.gitignore\\",
             "color": "foldercolorizer.color_cc6699"
         },
@@ -74,7 +70,7 @@
         },
         {
             "folderPath": "aplikacija\\src\\controllers\\",
-            "color": "foldercolorizer.color_33cc00"
+            "color": "foldercolorizer.color_99cc99"
         },
         {
             "folderPath": "aplikacija\\src\\dtos\\",
@@ -83,6 +79,10 @@
         {
             "folderPath": "aplikacija\\src\\misc\\",
             "color": "foldercolorizer.color_cccc66"
+        },
+        {
+            "folderPath": "aplikacija\\src\\",
+            "color": "foldercolorizer.color_ffffff"
         }
     ],
     "workbench.colorCustomizations": {
