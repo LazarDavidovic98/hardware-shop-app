@@ -24,6 +24,7 @@ import { ArticleService } from './services/article/article.service';
 import { Repository } from 'typeorm';
 import { AuthController } from './controllers/api/auth.contoller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { PhotoService } from './services/photo/photo.service';
 
 CrudConfigService.load({
   query: {
@@ -58,11 +59,16 @@ CrudConfigService.load({
     }),
     TypeOrmModule.forFeature([
       Administrator,
-      Category,
-      Article,
-      ArticlePrice,
-      ArticleFeature,
-      Repository,
+        ArticleFeature,
+        ArticlePrice,
+        Article,
+        CartArticle,
+        Cart,
+        Category,
+        Feature,
+        Order,
+        Photo,
+        User,  
     ])
   ],
   controllers: [
@@ -76,6 +82,7 @@ CrudConfigService.load({
     AdministratorService,
     CategoryService,
     ArticleService,
+    PhotoService,
   ],
 
   exports: [

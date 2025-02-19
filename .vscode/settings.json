@@ -91,6 +91,10 @@
         {
             "folderPath": "aplikacija\\.vscode\\settings.json\\",
             "color": "foldercolorizer.color_666699"
+        },
+        {
+            "folderPath": "aplikacija\\config\\storage.config.ts\\",
+            "color": "foldercolorizer.color_ffffff"
         }
     ],
     "workbench.colorCustomizations": {
