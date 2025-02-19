@@ -83,6 +83,14 @@
         {
             "folderPath": "aplikacija\\src\\",
             "color": "foldercolorizer.color_ffffff"
+        },
+        {
+            "folderPath": "aplikacija\\src\\middlewares\\",
+            "color": "foldercolorizer.color_ffcc99"
+        },
+        {
+            "folderPath": "aplikacija\\.vscode\\settings.json\\",
+            "color": "foldercolorizer.color_666699"
         }
     ],
     "workbench.colorCustomizations": {

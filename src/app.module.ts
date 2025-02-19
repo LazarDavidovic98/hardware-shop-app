@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './controllers/app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -23,6 +23,7 @@ import { ArticleController } from './controllers/api/article.controller';
 import { ArticleService } from './services/article/article.service';
 import { Repository } from 'typeorm';
 import { AuthController } from './controllers/api/auth.contoller';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 CrudConfigService.load({
   query: {
@@ -76,5 +77,17 @@ CrudConfigService.load({
     CategoryService,
     ArticleService,
   ],
+
+  exports: [
+    AdministratorService, // mora da bude dostupan i van modula 
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude('auth/*')
+      .forRoutes('api/*');
+  }  
+
+}
