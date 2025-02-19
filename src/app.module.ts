@@ -23,7 +23,7 @@ import { ArticleController } from './controllers/api/article.controller';
 import { ArticleService } from './services/article/article.service';
 import { Repository } from 'typeorm';
 import { AuthController } from './controllers/api/auth.contoller';
-import { AuthMiddleware } from './middlewares/auth.middleware';
+// import { AuthMiddleware } from './middlewares/auth.middleware';
 import { PhotoService } from './services/photo/photo.service';
 
 CrudConfigService.load({
@@ -92,9 +92,9 @@ CrudConfigService.load({
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(AuthMiddleware)
-      .exclude('auth/*')
-      .forRoutes('api/*');
+      //.apply(AuthMiddleware)
+      //.exclude('auth/*')
+      //.forRoutes('api/*');
   }  
 
 }

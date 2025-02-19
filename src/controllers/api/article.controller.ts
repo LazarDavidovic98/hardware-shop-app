@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseInterceptors} from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Req, UploadedFile, UseInterceptors} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { StorageConfig } from "config/storage.config";
 import { AddArticleDto } from "src/dtos/article/add.article.dto";
@@ -34,7 +34,8 @@ export class ArticleController {
                 filename: (req, file, callback) => {
 
                     let original: string = file.originalname;
-                    let normalized = original.replace(/\W+/g, '-');
+                    let normalized = original.replace(/\s+/g, '-');
+                    normalized = normalized.replace(/[^A-z0-9\.\-]/g, '')
                     let sada = new Date();
 
                     let datePart = '';
@@ -45,24 +46,26 @@ export class ArticleController {
                     let randomPart: string = 
                         new Array(10)
                             .fill(0)
-                            .map(e => (Math.random() * 9).toString())
+                            .map(e => (Math.random() * 9).toFixed(0).toString())
                             .join('');
 
                     let fileName = datePart + '-' + randomPart + '-' + normalized;    
-                    
+                    fileName = fileName.toLocaleLowerCase();
                     callback(null, fileName);
                 }
             }),
             fileFilter: (req, file, callback) => {
+                
                 // 1. Check ekstenzije: JPG, PNG
-                // 2. Check tipa sadrzaja: image/jpeg, image/png (mimetype)
-
-                if (!file.originalname.match(/\.(jpg|png)$/)) {
-                    callback(new Error('Bad file extensions!'), false);
+                if (!file.originalname.toLowerCase().match(/\.(jpg|png)$/)) {
+                    req.fileFilterError = 'Bad file extension !';
+                    callback(null, false);
                     return;
                 }
 
+                // 2. Check tipa sadrzaja: image/jpeg, image/png (mimetype)
                 if (!(file.mimetype.includes('jpeg') || file.mimetype.includes('png'))) {
+                    req.fileFilterError = 'Bad file content !';
                     callback(new Error('Bad file extensions!'), false);
                     return;
                 }
@@ -72,13 +75,23 @@ export class ArticleController {
             },
             limits: {
                 files: 1,
-                fieldSize: StorageConfig.photoMaxFileSize, 
+                fileSize: StorageConfig.photoMaxFileSize, 
             },
         })
     )
 
-    async uploadPhoto(@Param('id') articleId: number, @UploadedFile() photo): Promise<ApiResponse | Photo> {
-        //let imagePath = photo.filename; // u zapis u bazu podataka
+    async uploadPhoto(
+        @Param('id') articleId: number, 
+        @UploadedFile() photo,
+        @Req() req
+    ): Promise<ApiResponse | Photo> {
+        if (req.fileFilterError) {
+            return new ApiResponse('error', -4002, req.fileFilterError);
+        }
+
+        if (!photo) {
+            return new ApiResponse('error', -4002, 'File not uploaded !');
+        }
 
         const newPhoto: Photo = new Photo();
         newPhoto.articleId = articleId;
