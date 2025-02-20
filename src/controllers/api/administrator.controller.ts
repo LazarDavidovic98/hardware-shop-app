@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Put, Post } from "@nestjs/common";
-import { Administrator } from "entities/administrator.entity";
+import { Administrator } from "src/entities/administrator.entity";
 import { AdministratorDto } from "src/dtos/administrator/add.administrator.dto";
 import { EditAdministratorDto } from "src/dtos/administrator/edit.administrator.dto";
 import { ApiResponse } from "src/misc/api.response.class";

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Category } from "entities/category.entity";
+import { Category } from "src/entities/category.entity";
 import { ApiResponse } from "src/misc/api.response.class";
 
 @Injectable()

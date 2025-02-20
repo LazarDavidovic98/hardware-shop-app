@@ -6,10 +6,10 @@ import { ApiResponse } from "src/misc/api.response.class";
 import { ArticleService } from "src/services/article/article.service";
 import { fileName } from "typeorm-model-generator/dist/src/NamingStrategy";
 import { diskStorage } from "multer";
-import { Article } from "entities/article.entity";
+import { Article } from "src/entities/article.entity";
 import { PhotoService } from "src/services/photo/photo.service";
 import { Express } from 'express';
-import { Photo } from "entities/photo.entity";
+import { Photo } from "src/entities/photo.entity";
 import * as fileType from 'file-type';
 import * as fs from 'fs'; // za brisanje koristimo file skistem biblioteku
 import * as sharp from 'sharp';
@@ -32,7 +32,7 @@ export class ArticleController {
     @UseInterceptors(
         FileInterceptor('photo', {
             storage: diskStorage({
-                destination: StorageConfig.photoDestination,
+                destination: StorageConfig.photo.destination,
                 filename: (req, file, callback) => {
 
                     let original: string = file.originalname;
@@ -77,7 +77,7 @@ export class ArticleController {
             },
             limits: {
                 files: 1,
-                fileSize: StorageConfig.photoMaxFileSize, 
+                fileSize: StorageConfig.photo.maxSize, 
             },
         })
     )
@@ -111,8 +111,9 @@ export class ArticleController {
         }
 
         // TODO: Save a resized file 
-        await this.createThumb(photo);
-        await this.createSmallImage(photo);
+        await this.createResizedImage(photo, StorageConfig.photo.resize.thumb);
+        await this.createResizedImage(photo, StorageConfig.photo.resize.small);
+        await this.createResizedImage(photo, StorageConfig.photo.resize.medium);
 
         const newPhoto: Photo = new Photo();
         newPhoto.articleId = articleId;
@@ -127,44 +128,24 @@ export class ArticleController {
 
     }
 
-    async createThumb(photo) {
+    async createResizedImage(photo, resizeSettings) {
 
         const originalFilePath = photo.path;
         const fileName = photo.filename;
-        const destinationFilePath = StorageConfig.photoDestination + "thumb/" + fileName;
+
+        const destinationFilePath = 
+            StorageConfig.photo.destination + 
+            resizeSettings.directory + 
+            fileName;
 
         await sharp(originalFilePath)
             .resize({
                 fit: 'cover', // probati contain umesto cover, dodace crnu borduru levo i desno
-                width: StorageConfig.photoThumbSize.width,
-                height: StorageConfig.photoThumbSize.height,
-                background: {
-                    r: 255, g: 255, b: 255, alpha: 0.0
-                }
+                width: resizeSettings.width,
+                height: resizeSettings.height,
             })
             .toFile(destinationFilePath);
     }
-
-    async createSmallImage(photo) {
-
-        const originalFilePath = photo.path;
-        const fileName = photo.filename;
-        const destinationFilePath = StorageConfig.photoDestination + "small/" + fileName;
-
-        await sharp(originalFilePath)
-            .resize({
-                fit: 'cover', // probati contain umesto cover, dodace crnu borduru levo i desno
-                width: StorageConfig.photoSmallSize.width,
-                height: StorageConfig.photoSmallSize.height,
-                background: {
-                    r: 255, g: 255, b: 255, alpha: 0.0
-                }
-            })
-            .toFile(destinationFilePath);
-
-    }
-
-
 
 }
 

@@ -1,6 +1,6 @@
 import { Controller, Get, Param} from "@nestjs/common";
 import { CategoryService } from "src/services/category/category.service";
-import { Category } from "entities/category.entity";
+import { Category } from "src/entities/category.entity";
 import { ApiResponse } from "src/misc/api.response.class";
 
 @Controller('api/category')
