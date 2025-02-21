@@ -25,6 +25,8 @@ import { Repository } from 'typeorm';
 import { AuthController } from './controllers/api/auth.contoller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { PhotoService } from './services/photo/photo.service';
+import { FeatureService } from './services/feature/feature.service';
+import { FeatureController } from './controllers/api/feature.controller';
 
 CrudConfigService.load({
   query: {
@@ -77,12 +79,14 @@ CrudConfigService.load({
     CategoryController,
     ArticleController,
     AuthController,
+    FeatureController,
   ],
   providers: [
     AdministratorService,
     CategoryService,
     ArticleService,
     PhotoService,
+    FeatureService,
   ],
 
   exports: [

@@ -12,7 +12,7 @@ import {
 import { ArticleFeature } from "./article-feature.entity";
 import { Category } from "./category.entity";
 import { Article } from "./article.entity";
-
+import { TypeOrmModule } from '@nestjs/typeorm'
 
 @Index("fk_feature_category_id", ["categoryId"], {})
 @Index("uq_feature_name_category_id", ["name", "categoryId"], { unique: true })

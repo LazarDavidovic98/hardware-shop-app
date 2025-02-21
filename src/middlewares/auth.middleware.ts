@@ -17,13 +17,13 @@ export class AuthMiddleware implements NestMiddleware {
     
         const token = req.headers.authorization;
     
-/*      const tokenParts = token.split(' '); // skipujemo "Barer" kljucnu rec koja je ispred tokena
+    /* const tokenParts = token.split(' '); // skipujemo "Barer" kljucnu rec koja je ispred tokena
         if (tokenParts.length !== 2) {
              throw new HttpException('Bad token found', HttpStatus.UNAUTHORIZED);
         }
 
         const tokenString = tokenParts[1]; 
-*/
+    */
         let jwtData: JwtDataAdministratorDto;
         try {
              jwtData = jwt.verify(token, jwtSecret) as JwtDataAdministratorDto;

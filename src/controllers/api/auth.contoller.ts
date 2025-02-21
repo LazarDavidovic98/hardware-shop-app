@@ -57,12 +57,3 @@ export class AuthController {
 
 }
 
-// Za ove podatke pravimo klasu unutar login.info.administrator.dto.ts
-
-// administratorId
-// username
-// token (JWT)
-// TAJNA SIFRA
-// JSON = { administratorId,  username, exp, ip, ua}
-// Sifrovanje ( TAJNA SIFRA => JSON) => BINARNO SIFROVANA PORUKA => BASE64 (za enkodovanje)
-// HEXStting  
