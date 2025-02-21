@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UploadedFile, UseInterceptors} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, UploadedFile, UseInterceptors} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { StorageConfig } from "config/storage.config";
 import { AddArticleDto } from "src/dtos/article/add.article.dto";
@@ -145,6 +145,15 @@ export class ArticleController {
                 height: resizeSettings.height,
             })
             .toFile(destinationFilePath);
+    }
+
+    @Delete(':articleId/deletePhoto/:photoId')
+    public async deletePhoto(
+        @Param('articleId') articleId: number,
+        @Param('photoId') photoId: number,
+
+    ){
+
     }
 
 }
