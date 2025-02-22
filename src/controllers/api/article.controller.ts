@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UploadedFile, UseInterceptors} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UploadedFile, UseInterceptors} from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { StorageConfig } from "config/storage.config";
 import { AddArticleDto } from "src/dtos/article/add.article.dto";
@@ -8,13 +8,50 @@ import { fileName } from "typeorm-model-generator/dist/src/NamingStrategy";
 import { diskStorage } from "multer";
 import { Article } from "src/entities/article.entity";
 import { PhotoService } from "src/services/photo/photo.service";
-import { Express } from 'express';
+import { Express, query } from 'express';
 import { Photo } from "src/entities/photo.entity";
 import * as fileType from 'file-type';
 import * as fs from 'fs'; // za brisanje koristimo file skistem biblioteku
 import * as sharp from 'sharp';
+import { DeleteResult } from "typeorm";
+import { join } from "path";
+import { ArticlePrice } from "src/entities/article-price.entity";
+import { ArticleFeature } from "src/entities/article-feature.entity";
+import { Crud } from "@nestjsx/crud";
+import { EditArticleDto } from "src/dtos/article/edit.erticle.dto";
 
 @Controller('api/article')
+@Crud({
+    model: {
+        type: Article
+    },
+    params: {
+        id: {
+            field: 'articleId',
+            type: 'number',
+            primary: true
+        }
+    },
+    query: {
+        join: {
+            category: {
+                eager: true
+            },
+            photos: {
+                eager: true
+            },
+            articlePrices: {
+                eager: true
+            },
+            articleFeatures: {
+                eager: true
+            }
+        }
+    },
+    routes: {
+        exclude: ["updateOneBase", "replaceOneBase", "deleteOneBase"],
+    },
+})
 export class ArticleController {
 
     constructor(
@@ -23,9 +60,14 @@ export class ArticleController {
         public photoService: PhotoService, 
     ) {}
 
-    @Post('createFull')
+    @Post('createFull') // POST http://localhost:3000/api/article/createFull
     createFullArticle(@Body() data: AddArticleDto) {
         return this.service.createFullArticle(data);
+    }
+
+    @Patch(':id')
+    editFullArticle(@Param('id') id: number, @Body() data: EditArticleDto) {
+        return this.service.editFullArticle(id, data);
     }
 
     @Post(':id/uploadPhoto/')
@@ -152,8 +194,37 @@ export class ArticleController {
         @Param('articleId') articleId: number,
         @Param('photoId') photoId: number,
 
-    ){
+    ) {
+        const foundArticle = await this.service.findOne({
+            where: { articleId: articleId }, // Ovaj deo ispravlja grešku
+            relations: ["category", "articleFeatures", "features", "articlePrices"]
+        });
+        
+        const photo = await this.photoService.findOne({ where: { photoId: photoId } });
 
+        if (!photo) {
+            return new ApiResponse('error', -40004, 'Photo not found!');
+        }
+
+
+        fs.unlinkSync(StorageConfig.photo.destination + photo.imagePath);
+        fs.unlinkSync(StorageConfig.photo.destination + 
+                      StorageConfig.photo.resize.thumb.directory + 
+                      photo.imagePath);
+        fs.unlinkSync(StorageConfig.photo.destination + 
+                      StorageConfig.photo.resize.thumb.directory + 
+                      photo.imagePath);
+
+        const deleteResult = await this.photoService.deleteById(photoId);
+
+
+
+        if (deleteResult.affected === 0) {
+            return new ApiResponse('error', -4004, 'Photo not found!');
+        }
+                      
+
+        return new ApiResponse('ok', 0, 'One photo deleted !');
     }
 
 }
