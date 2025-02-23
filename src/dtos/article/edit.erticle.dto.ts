@@ -3,7 +3,7 @@ export class EditArticleDto {
     categoryId: number;
     excerpt: string;
     description: string;
-    status: 'available' | 'visible' | 'hidden';
+    status: 'available' | 'visible' | 'hidden'; 
     isPromoted: 0 | 1;
     price: number;
     features: {

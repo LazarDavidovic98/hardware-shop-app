@@ -27,6 +27,7 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 import { PhotoService } from './services/photo/photo.service';
 import { FeatureService } from './services/feature/feature.service';
 import { FeatureController } from './controllers/api/feature.controller';
+import { UserService } from './services/user/user.service';
 
 CrudConfigService.load({
   query: {
@@ -60,7 +61,7 @@ CrudConfigService.load({
       ]     
     }),
     TypeOrmModule.forFeature([
-      Administrator,
+        Administrator,
         ArticleFeature,
         ArticlePrice,
         Article,
@@ -87,6 +88,7 @@ CrudConfigService.load({
     ArticleService,
     PhotoService,
     FeatureService,
+    UserService,
   ],
 
   exports: [
