@@ -1,6 +1,7 @@
-export class JwtDataAdministratorDto {
-    administratorId: number;
-    username: string;
+export class JwtDataDto {
+    role: "administrator" | "user";
+    id: number;
+    identity: string;
     exp: number; // unix timestamp
     ip: string;
     ua: string;
@@ -8,8 +9,9 @@ export class JwtDataAdministratorDto {
     // Konverzija u obican objekat: 
     toPlainObject() {
         return {
-            administratorId: this.administratorId,
-            username: this.username,
+            role: this.role,
+            id: this.id,
+            identity: this.identity,
             exp: this.exp,
             ip: this.ip,
             ua: this.ua,

@@ -93,6 +93,7 @@ CrudConfigService.load({
 
   exports: [
     AdministratorService, // mora da bude dostupan i van modula 
+    UserService,
   ],
 })
 export class AppModule implements NestModule {
