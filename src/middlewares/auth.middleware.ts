@@ -46,7 +46,7 @@ export class AuthMiddleware implements NestMiddleware {
         }
     
         // Proveravamo sta je tacno rola, da li je user ili administrator: 
-        
+
         if (jwtData.role === "administrator") {
           const administrator = await this.administratorService.getById(jwtData.id);
           if (!administrator) {
@@ -64,6 +64,9 @@ export class AuthMiddleware implements NestMiddleware {
         if (trenutniTimestamp >= jwtData.exp) {
              throw new HttpException('The token has expired', HttpStatus.UNAUTHORIZED);
         }
+
+
+        req.token = jwtData;
     
         next(); 
      }
