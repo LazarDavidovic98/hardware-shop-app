@@ -39,8 +39,8 @@ export class AdministratorController {
     }
     
     
-    // PUT http://localhost:3000/api/administrator/
-    @Put()
+    // POST http://localhost:3000/api/administrator/
+    @Post()
     @UseGuards(RoleCheckedGuard)
     @AllowToRoles('administrator')
     add(@Body() data: AdministratorDto): Promise<Administrator | ApiResponse> {
