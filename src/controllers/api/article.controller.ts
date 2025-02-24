@@ -181,7 +181,6 @@ export class ArticleController {
         // TODO: Save a resized file 
         await this.createResizedImage(photo, StorageConfig.photo.resize.thumb);
         await this.createResizedImage(photo, StorageConfig.photo.resize.small);
-        await this.createResizedImage(photo, StorageConfig.photo.resize.medium);
 
         const newPhoto: Photo = new Photo();
         newPhoto.articleId = articleId;

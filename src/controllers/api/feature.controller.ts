@@ -68,8 +68,8 @@ import { FeatureService } from "src/services/feature/feature.service";
                 UseGuards(RoleCheckedGuard),
                 AllowToRoles('administrator', 'user'),
             ],
-        }
-    }
+        },
+    },
 })
 export class FeatureController implements CrudController<Feature> {
     constructor(public service: FeatureService) {} // Mora biti public da bi CrudController mogao da koristi servis
