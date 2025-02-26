@@ -30,6 +30,7 @@ import { FeatureController } from './controllers/api/feature.controller';
 import { UserService } from './services/user/user.service';
 import { CartService } from './services/cart/cart.service';
 import { UserCartController } from './controllers/api/user.cart.controller';
+import { OrderService } from './services/order/order.service';
 
 CrudConfigService.load({
   query: {
@@ -93,6 +94,7 @@ CrudConfigService.load({
     FeatureService,
     UserService,
     CartService,
+    OrderService,
   ],
 
   exports: [
