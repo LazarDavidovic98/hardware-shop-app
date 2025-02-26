@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Article } from "./article.entity";
 import { Feature } from "./feature.entity";
+import * as Validator from 'class-validator';
 
 @Index("fk_article_feature_feature_id", ["featureId"], {})
 @Index("uq_article_feature_article_id_feature_id", ["articleId", "featureId"], {

@@ -13,6 +13,7 @@ import { ArticleFeature } from "./article-feature.entity";
 import { Category } from "./category.entity";
 import { Article } from "./article.entity";
 import { TypeOrmModule } from '@nestjs/typeorm'
+import * as Validator from 'class-validator';
 
 @Index("fk_feature_category_id", ["categoryId"], {})
 @Index("uq_feature_name_category_id", ["name", "categoryId"], { unique: true })
@@ -21,10 +22,13 @@ export class Feature {
   @PrimaryGeneratedColumn({ type: "int", name: "feature_id", unsigned: true })
   featureId: number;
 
-  @Column({type: "varchar",  name: "name", length: 32, default: () => "'0'" })
+  @Column({type: "varchar",  name: "name", length: 32})
+  @Validator.IsNotEmpty()
+  @Validator.IsString()
+  @Validator.Length(5, 32)
   name: string;
 
-  @Column({type: "int",  name: "category_id", unsigned: true, default: () => "'0'" })
+  @Column({type: "int",  name: "category_id", unsigned: true})
   categoryId: number;
 
   @OneToMany(() => ArticleFeature, (articleFeature) => articleFeature.feature)

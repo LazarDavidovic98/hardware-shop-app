@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Article } from "./article.entity";
+import * as Validator from 'class-validator';
 
 @Index("fk_article_price_article_id", ["articleId"], {})
 @Entity("article_price")
@@ -26,9 +27,9 @@ export class ArticlePrice {
     name: "price",
     unsigned: true,
     precision: 10,
-    scale: 2,
-    default: () => "'0'",
+    scale: 2
   })
+  
   price: number;
 
   @Column({type: "timestamp",  name: "created_at", default: () => "'now()'" })

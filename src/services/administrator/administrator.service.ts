@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { error } from 'console';
 import { Administrator } from 'src/entities/administrator.entity';
 import { resolve } from 'path';
-import { AdministratorDto } from 'src/dtos/administrator/add.administrator.dto';
+import { AddAdministratorDto } from 'src/dtos/administrator/add.administrator.dto';
 import { EditAdministratorDto } from 'src/dtos/administrator/edit.administrator.dto';
 import { ApiResponse } from 'src/misc/api.response.class';
 import { Repository } from 'typeorm';
@@ -40,7 +40,7 @@ export class AdministratorService {
         });
     }
 
-    add(data: AdministratorDto): Promise<Administrator | ApiResponse> {
+    add(data: AddAdministratorDto): Promise<Administrator | ApiResponse> {
         // DTO => Model
         // username -> username
         // password - [obrada nekog programa]-> passwordHash
