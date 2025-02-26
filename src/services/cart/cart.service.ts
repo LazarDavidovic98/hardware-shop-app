@@ -15,12 +15,6 @@ export class CartService {
         @InjectRepository(CartArticle)
         private readonly cartArticle: Repository<CartArticle>,
 
-        @InjectRepository(Article)
-        private readonly article: Repository<Article>,
-
-        @InjectRepository(Order)
-        private readonly order: Repository<Order>,
-
     ) {}
 
     // proveravamo da li je u bazi podataka za korisnika otvorena korpa koja nije
@@ -97,10 +91,10 @@ export class CartService {
 
     async changeQuantity(cartId: number, articleId: number, newQuantity: number): Promise<Cart> {
         let record: CartArticle | null = await this.cartArticle.findOne({
-          where: {
-            cartId: cartId,
-            articleId: articleId,
-          }
+            where: {
+                cartId: cartId,
+                articleId: articleId,
+            }
         });
 
         if (record) {
