@@ -29,7 +29,13 @@ export class ArticlePrice {
     precision: 10,
     scale: 2
   })
-  
+  @Validator.IsNotEmpty()
+  @Validator.IsPositive()
+  @Validator.IsNumber({
+    allowInfinity: false,
+    allowNaN: false,
+    maxDecimalPlaces: 2, 
+  })
   price: number;
 
   @Column({type: "timestamp",  name: "created_at", default: () => "'now()'" })

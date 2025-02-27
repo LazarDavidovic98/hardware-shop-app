@@ -21,6 +21,7 @@ import { Crud } from "@nestjsx/crud";
 import { EditArticleDto } from "src/dtos/article/edit.erticle.dto";
 import { AllowToRoles } from "src/misc/allow.to.roles.descriptor";
 import { RoleCheckedGuard } from "src/misc/role.checker.guard";
+import { ArticleSearchDto } from "src/dtos/article/article.search.dto";
 
 @Controller('api/article')
 @Crud({
@@ -237,11 +238,11 @@ export class ArticleController {
 
         fs.unlinkSync(StorageConfig.photo.destination + photo.imagePath);
         fs.unlinkSync(StorageConfig.photo.destination + 
-                      StorageConfig.photo.resize.thumb.directory + 
-                      photo.imagePath);
+                    StorageConfig.photo.resize.thumb.directory + 
+                    photo.imagePath);
         fs.unlinkSync(StorageConfig.photo.destination + 
-                      StorageConfig.photo.resize.thumb.directory + 
-                      photo.imagePath);
+                    StorageConfig.photo.resize.thumb.directory + 
+                    photo.imagePath);
 
         const deleteResult = await this.photoService.deleteById(photoId);
 
@@ -250,9 +251,15 @@ export class ArticleController {
         if (deleteResult.affected === 0) {
             return new ApiResponse('error', -4004, 'Photo not found!');
         }
-                      
 
         return new ApiResponse('ok', 0, 'One photo deleted !');
+    }
+
+    @Post('search')
+    @UseGuards(RoleCheckedGuard)
+    @AllowToRoles('administrator', 'user')
+    async search(@Body() data: ArticleSearchDto): Promise<Article[]> {
+        return await this.service.search(data);
     }
 
 }

@@ -6,8 +6,11 @@ import { ArticlePrice } from "src/entities/article-price.entity";
 import { Article } from "src/entities/article.entity";
 import { AddArticleDto } from "src/dtos/article/add.article.dto";
 import { ApiResponse } from "src/misc/api.response.class";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { EditArticleDto } from "src/dtos/article/edit.erticle.dto";
+import { ArticleSearchDto } from "src/dtos/article/article.search.dto";
+import { max } from "class-validator";
+import { In } from "typeorm";
 
 
 @Injectable()
@@ -69,9 +72,9 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     
     async editFullArticle(articleId: number, data: EditArticleDto): Promise<Article | ApiResponse> {
         const existingArticle: Article | null = await this.article.findOne({
-    where: { articleId: articleId },
-    relations: ['articlePrices', 'articleFeatures']
-});
+            where: { articleId: articleId },
+            relations: ['articlePrices', 'articleFeatures']
+        });
 
 
         if (!existingArticle) {
@@ -137,6 +140,99 @@ export class ArticleService extends TypeOrmCrudService<Article> {
         
         return updatedArticle;
         
-
     }
+
+    async search (data: ArticleSearchDto): Promise<Article[]> {
+        const builder = await this.article.createQueryBuilder("article");
+    
+        builder.innerJoinAndSelect(
+            "article.articlePrices",
+            "ap",
+            "ap.createdAt = (SELECT MAX(ap.created_at) FROM article_price AS ap WHERE ap.articleId = article.articleId)"
+
+        );
+        builder.leftJoinAndSelect("article.articleFeatures", "af");
+    
+        builder.where('article.categoryId = :catId', { catId: data.categoryId });
+    
+        if (data.keywords && data.keywords.length > 0) {
+            builder.andWhere(
+                `(
+                article.name LIKE :kw OR 
+                article.excerpt LIKE :kw OR 
+                article.description LIKE :kw
+                )`,
+                { kw: '%' + data.keywords + '%' }
+            );
+        }
+    
+        if (typeof data.priceMin === "number") {
+            builder.andWhere('ap.price >= :min', { min: data.priceMin }); // Ispravljeno 'app.price' u 'ap.price'
+        }
+    
+        if (typeof data.priceMax === "number") {
+            builder.andWhere('ap.price <= :max', { max: data.priceMax }); // Ispravljeno 'app.price' u 'ap.price'
+        }
+    
+        if (Array.isArray(data.features) && data.features.length > 0) {  // <-- ISPRAVLJENO
+            for (const feature of data.features) {
+                builder.andWhere(
+                    'af.featureId = :fId AND af.value IN (:...fVals)',
+                    {
+                        fId: feature.featureId,
+                        fVals: feature.values,
+                    }
+                );
+            }
+        }
+    
+        let orderBy = 'article.name';
+        let orderDirection: 'ASC' | 'DESC' = 'ASC';
+    
+        if (data.orderBy) {
+            orderBy = data.orderBy;
+    
+            // Razlikuje se ono sto korisnik vidi i ono sto je u bazi upisano
+            if (orderBy === 'price') {
+                orderBy = 'ap.price';
+            }
+
+            if (orderBy === 'name') {
+                orderBy = 'article.name';  
+            }
+        }
+    
+        if (data.orderDirection) {
+            orderDirection = data.orderDirection.toUpperCase() as 'ASC' | 'DESC';
+        }
+    
+        builder.orderBy(orderBy, orderDirection);
+    
+        let page = 0;
+        let perPage: 5 | 10 | 25 | 50 | 75 = 25;
+    
+        if (typeof data.page === 'number') {
+            page = data.page;
+        }
+    
+        if (typeof data.itemsPerPage === 'number') {
+            perPage = data.itemsPerPage;
+        } 
+    
+        builder.skip(page * perPage);
+        builder.take(perPage);
+    
+        let articleIds = await (await builder.getMany()).map(article => article.articleId);
+        
+        return await this.article.find({
+            where: { articleId: In(articleIds) },
+            relations: [
+                "category",
+                "articleFeatures",
+                "features",
+                "articlePrices"
+            ]
+        });
+    }
+    
 }

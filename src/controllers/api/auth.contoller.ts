@@ -25,7 +25,7 @@ export class AuthController {
         const administrator = await this.administratorService.getByUsername(data.username);
 
 
-        if(!administrator) {0
+        if(!administrator) {
             return new Promise(resolve => resolve(new ApiResponse('error', -3001)))
         }
 
