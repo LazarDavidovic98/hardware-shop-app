@@ -31,6 +31,10 @@ import { UserService } from './services/user/user.service';
 import { CartService } from './services/cart/cart.service';
 import { UserCartController } from './controllers/api/user.cart.controller';
 import { OrderService } from './services/order/order.service';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailConfig } from 'config/mail.config';
+import { from } from 'rxjs';
+import { OrderMailer } from './services/order/order.mailer.service';
 
 CrudConfigService.load({
   query: {
@@ -75,7 +79,15 @@ CrudConfigService.load({
         Order,
         Photo,
         User,  
-    ])
+    ]),
+    MailerModule.forRoot({
+      transport: 'smtps://' + MailConfig.username + ':' +
+                              MailConfig.password + '@' +
+                              MailConfig.hostname,
+      defaults: {
+        from: MailConfig.senderEmail,
+      },                        
+    }),
   ],
   controllers: [
     AppController,
@@ -95,6 +107,7 @@ CrudConfigService.load({
     UserService,
     CartService,
     OrderService,
+    OrderMailer,
   ],
 
   exports: [
