@@ -35,6 +35,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailConfig } from 'config/mail.config';
 import { from } from 'rxjs';
 import { OrderMailer } from './services/order/order.mailer.service';
+import { UserToken } from './entities/user-token.entity';
 
 CrudConfigService.load({
   query: {
@@ -65,6 +66,7 @@ CrudConfigService.load({
         Order,
         Photo,
         User,
+        UserToken,
       ]     
     }),
     TypeOrmModule.forFeature([
@@ -79,6 +81,7 @@ CrudConfigService.load({
         Order,
         Photo,
         User,  
+        UserToken,
     ]),
     MailerModule.forRoot({
       transport: 'smtps://' + MailConfig.username + ':' +

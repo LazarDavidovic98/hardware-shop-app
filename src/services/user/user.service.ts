@@ -6,10 +6,14 @@ import { ApiResponse } from "src/misc/api.response.class";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
 import { UserRegistrationDto } from "src/dtos/user/user.registration.dto";
 import * as crypto from 'crypto';
+import { UserToken } from "src/entities/user-token.entity";
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<User> {
-    constructor(@InjectRepository(User) private readonly user: Repository<User>) {
+    constructor(
+        @InjectRepository(User) private readonly user: Repository<User>,
+        @InjectRepository(UserToken) private readonly userToken: Repository<UserToken>,
+    ) {
         super(user);
     }
 
@@ -63,5 +67,57 @@ export class UserService extends TypeOrmCrudService<User> {
         }
         
         return null;
+    }
+
+    async addToken(userId: number, token: string, expiresAt: string) {
+        const userToken = new UserToken();
+        userToken.userId = userId;
+        userToken.token = token;
+        userToken.expiresAt = expiresAt;
+
+        return await this.userToken.save(userToken);
+    }
+
+    async getUserToken(token: string): Promise<UserToken | null> {
+        return await this.userToken.findOne({
+            where: { token: token },
+        });
+    }
+
+    async invalidateToken(token: string): Promise<UserToken | ApiResponse> {
+        const userToken = await this.userToken.findOne({
+            where: { token: token },
+        });
+    
+        if (!userToken) {
+            return new ApiResponse("error", -10001, "No such refresh token!");
+        }
+    
+        userToken.isValid = 0;
+    
+        await this.userToken.save(userToken);
+    
+        const updatedUserToken = await this.getUserToken(token);
+        
+        if (!updatedUserToken) {
+            return new ApiResponse("error", -10002, "Failed to retrieve updated token!");
+        }
+    
+        return updatedUserToken;
+    }
+    
+
+    async invalidateUserTokens(userId: number): Promise<(UserToken | ApiResponse)[]> {
+        const userTokens = await this.userToken.find({
+            where: { userId: userId },
+        });
+
+        const results: (UserToken | ApiResponse)[] = [];
+
+        for (const userToken of userTokens) {
+            results.push(await this.invalidateToken(userToken.token));
+        }
+
+        return results;
     }
 }
