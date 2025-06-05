@@ -50,8 +50,8 @@ This is a full-stack eCommerce web application for selling computer hardware. It
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Milantex/Aplikacija2020.git
-   cd Aplikacija2020
+   git clone git@github.com:LazarDavidovic98/hardware-shop-app.git
+   cd hardware-shop-app
    ```
 
 2. **Install all Node.js dependencies**
